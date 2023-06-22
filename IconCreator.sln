@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconCreator", "IconCreator\IconCreator.csproj", "{C345E46A-6E90-4C37-AF08-E263298EEB8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{A526775C-8B16-46BA-A956-33E5C0B5B885}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+		Build.sh = Build.sh
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C345E46A-6E90-4C37-AF08-E263298EEB8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C345E46A-6E90-4C37-AF08-E263298EEB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C345E46A-6E90-4C37-AF08-E263298EEB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C345E46A-6E90-4C37-AF08-E263298EEB8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

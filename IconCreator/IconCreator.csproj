@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <Deterministic>true</Deterministic>
+        <OutputType>WinExe</OutputType>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
+        <ApplicationManifest>App.manifest</ApplicationManifest>
+        <SatelliteResourceLanguages>None</SatelliteResourceLanguages>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <UseRidGraph>true</UseRidGraph>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(OS)' == 'Unix'">
+        <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
+    </PropertyGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+    <PropertyGroup>
+        <TrimMode>copyused</TrimMode>
+        <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+        <PublishSingleFile>true</PublishSingleFile>
+        <PublishTrimmed>true</PublishTrimmed>
+        <SelfContained>true</SelfContained>
+    </PropertyGroup>
+    <ItemGroup>
+        <TrimmableAssembly Include="OpenView" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Assets\Icon.icns" CopyToOutputDirectory="PreserveNewest" Pack="true">
+            <PackageCopyTo>${publishdir}</PackageCopyTo>
+        </None>
+    </ItemGroup>
+    <PropertyGroup>
+        <CFBundleName>IconCreator</CFBundleName>
+        <CFBundleDisplayName>IconCreator</CFBundleDisplayName>
+        <CFBundleIdentifier>me.oneo.iconcreator</CFBundleIdentifier>
+        <CFBundleVersion>1.0.0</CFBundleVersion>
+        <CFBundlePackageType>APPL</CFBundlePackageType>
+        <CFBundleShortVersionString>IconCreator 1.0.0</CFBundleShortVersionString>
+        <CFBundleSignature>me.oneo.iconcreator</CFBundleSignature>
+        <CFBundleExecutable>IconCreator</CFBundleExecutable>
+        <CFBundleIconFile>Assets/Icon.icns</CFBundleIconFile>
+        <ApplicationIcon>Assets/Icon.icns</ApplicationIcon>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="DotNet.Bundle" Version="0.9.13" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="OpenView.Desktop" Version="1.2.1" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.0.2" />
+        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.0.1" />
+    </ItemGroup>
+</Project>

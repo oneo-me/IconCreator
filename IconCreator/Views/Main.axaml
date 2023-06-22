@@ -1,0 +1,10 @@
+<View
+    x:Class="IconCreator.Views.Main"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:IconCreator.Views">
+    <Design.DataContext>
+        <local:Main_Model_Design />
+    </Design.DataContext>
+    <Image Source="{Binding Image}" Margin="20" />
+</View>
