@@ -6,5 +6,8 @@
     <Design.DataContext>
         <local:Main_Model_Design />
     </Design.DataContext>
-    <Image Source="{Binding Image}" Margin="20" />
+    <Panel>
+        <Image Source="{Binding Image}" />
+        <MenuBar Menu="{Binding Menu}" HorizontalAlignment="Right" VerticalAlignment="Top" />
+    </Panel>
 </View>

@@ -32,10 +32,10 @@ public class Main_Model : WindowModel<Main>
         {
             Menu =
             [
-                new NativeMenuItem("Import Image") { Command = new AsyncFuncCommand(ImportFileAsync) },
+                new NativeMenuItem("Import Image") { Command = ImportFileAsyncCommand },
                 new NativeMenuItemSeparator(),
-                new NativeMenuItem("Export Icon") { Command = new AsyncFuncCommand(ExportIconAsync) },
-                new NativeMenuItem("Export Icns") { Command = new AsyncFuncCommand(ExportIcnsAsync) }
+                new NativeMenuItem("Export Icon") { Command = ExportIconAsyncCommand },
+                new NativeMenuItem("Export Icns") { Command = ExportIcnsAsyncCommand }
             ]
         });
     }
@@ -77,7 +77,7 @@ public class Main_Model : WindowModel<Main>
         _configService.Config.Path = file;
     }
 
-    async Task ImportFileAsync()
+    public AsyncCommand ImportFileAsyncCommand => CreateCommand(() => new AsyncCommand(async () =>
     {
         var topLevel = AppView.GetTopLevel();
         var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(new()
@@ -91,9 +91,9 @@ public class Main_Model : WindowModel<Main>
             return;
 
         Path = storageFiles[0].Path.LocalPath;
-    }
+    }));
 
-    async Task ExportIconAsync()
+    public AsyncCommand ExportIconAsyncCommand => CreateCommand(() => new AsyncCommand(async () =>
     {
         var topLevel = AppView.GetTopLevel();
         var storageFile = await topLevel.StorageProvider.SaveFilePickerAsync(new()
@@ -112,9 +112,9 @@ public class Main_Model : WindowModel<Main>
         using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(Path);
         await using var fileStream = File.Create(sourceFile);
         await source.SaveAsync(fileStream, new IconEncoder()).ConfigureAwait(false);
-    }
+    }));
 
-    async Task ExportIcnsAsync()
+    public AsyncCommand ExportIcnsAsyncCommand => CreateCommand(() => new AsyncCommand(async () =>
     {
         var topLevel = AppView.GetTopLevel();
         var storageFile = await topLevel.StorageProvider.SaveFilePickerAsync(new()
@@ -133,5 +133,5 @@ public class Main_Model : WindowModel<Main>
         using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(Path);
         await using var fileStream = File.Create(sourceFile);
         await source.SaveAsync(fileStream, new IconEncoder()).ConfigureAwait(false);
-    }
+    }));
 }
