@@ -1,3 +1,5 @@
+using SixLabors.ImageSharp;
+
 namespace IconCreator.Encoders;
 
 public class IconEncoder : EncoderBase

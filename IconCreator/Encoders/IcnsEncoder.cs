@@ -1,4 +1,5 @@
 using System.Text;
+using SixLabors.ImageSharp;
 
 namespace IconCreator.Encoders;
 

@@ -7,19 +7,17 @@ using IconCreator.Services;
 using OpenView;
 using OpenView.Commands;
 using OpenView.Models;
+using OpenView.Services;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace IconCreator.Views;
 
-public class Main_Model_Design() : Main_Model(null!);
-
 public class Main_Model : WindowModel<Main>
 {
-    readonly ConfigService _configService;
+    readonly ConfigService _configService = Service.Get<ConfigService>();
 
-    public Main_Model(ConfigService configService)
+    public Main_Model()
     {
-        _configService = configService;
-
         using var iconStream = AssetLoader.Open(new("avares://IconCreator/Assets/Icon.ico"));
 
         Icon = new(iconStream);
@@ -30,13 +28,7 @@ public class Main_Model : WindowModel<Main>
 
         Menu.Add(new NativeMenuItem("File")
         {
-            Menu =
-            [
-                new NativeMenuItem("Import Image") { Command = ImportFileAsyncCommand },
-                new NativeMenuItemSeparator(),
-                new NativeMenuItem("Export Icon") { Command = ExportIconAsyncCommand },
-                new NativeMenuItem("Export Icns") { Command = ExportIcnsAsyncCommand }
-            ]
+            Menu = [new NativeMenuItem("Import Image") { Command = ImportFileAsyncCommand }, new NativeMenuItemSeparator(), new NativeMenuItem("Export Icon") { Command = ExportIconAsyncCommand }, new NativeMenuItem("Export Icns") { Command = ExportIcnsAsyncCommand }]
         });
     }
 
@@ -77,7 +69,7 @@ public class Main_Model : WindowModel<Main>
         _configService.Config.Path = file;
     }
 
-    public AsyncCommand ImportFileAsyncCommand => CreateCommand(() => new AsyncCommand(async () =>
+    public AsyncCommand ImportFileAsyncCommand => GetCommand(async () =>
     {
         var topLevel = AppView.GetTopLevel();
         var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(new()
@@ -91,9 +83,9 @@ public class Main_Model : WindowModel<Main>
             return;
 
         Path = storageFiles[0].Path.LocalPath;
-    }));
+    });
 
-    public AsyncCommand ExportIconAsyncCommand => CreateCommand(() => new AsyncCommand(async () =>
+    public AsyncCommand ExportIconAsyncCommand => GetCommand(async () =>
     {
         var topLevel = AppView.GetTopLevel();
         var storageFile = await topLevel.StorageProvider.SaveFilePickerAsync(new()
@@ -112,9 +104,9 @@ public class Main_Model : WindowModel<Main>
         using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(Path);
         await using var fileStream = File.Create(sourceFile);
         await source.SaveAsync(fileStream, new IconEncoder()).ConfigureAwait(false);
-    }));
+    });
 
-    public AsyncCommand ExportIcnsAsyncCommand => CreateCommand(() => new AsyncCommand(async () =>
+    public AsyncCommand ExportIcnsAsyncCommand => GetCommand(async () =>
     {
         var topLevel = AppView.GetTopLevel();
         var storageFile = await topLevel.StorageProvider.SaveFilePickerAsync(new()
@@ -133,5 +125,5 @@ public class Main_Model : WindowModel<Main>
         using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(Path);
         await using var fileStream = File.Create(sourceFile);
         await source.SaveAsync(fileStream, new IconEncoder()).ConfigureAwait(false);
-    }));
+    });
 }

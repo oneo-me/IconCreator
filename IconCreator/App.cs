@@ -12,15 +12,20 @@ sealed class App : AppBase
 
     public override string Name => "IconCreator";
 
-    protected override IWindowModel OnRun()
+    protected override IWindowModel CreateMain()
+    {
+        return new Main_Model();
+    }
+
+    protected override Task OnRunAsync(RunArgs args)
     {
         var configService = Service.Add(new ConfigService(_data));
 
-        return new Main_Model(configService);
-    }
+        args.OnExit = () =>
+        {
+            configService.Save();
+        };
 
-    protected override void OnExit()
-    {
-        Service.Get<ConfigService>().Save();
+        return Task.CompletedTask;
     }
 }

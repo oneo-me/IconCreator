@@ -12,6 +12,7 @@ public class ConfigService
     public ConfigService(string dataFolder)
     {
         _configFile = Path.Combine(dataFolder, "config.json");
+        Directory.CreateDirectory(dataFolder);
 
         if (File.Exists(_configFile))
         {
